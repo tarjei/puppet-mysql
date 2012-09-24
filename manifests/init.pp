@@ -1,6 +1,12 @@
 # mysql.pp
 # Copyright (C) 2007 David Schmitt <david@schmitt.edv-bus.at>
 # See LICENSE for the full license granted to you.
+class mysql::client {
+    package { "mysql-client":
+        ensure => installed,
+    }   
+   
+}
 
 class mysql::server {
 
@@ -8,10 +14,10 @@ class mysql::server {
 		ensure => installed,
 	}
 
-	munin::plugin {
-		[mysql_bytes, mysql_queries, mysql_slowqueries, mysql_threads]:
-			config => "env.mysqlopts --defaults-file=/etc/mysql/debian.cnf\nuser root"
-	}
+#	munin::plugin {
+#		[mysql_bytes, mysql_queries, mysql_slowqueries, mysql_threads]:
+#			config => "env.mysqlopts --defaults-file=/etc/mysql/debian.cnf\nuser root"
+#	}
 
 	service { mysql:
 		ensure => running,
@@ -20,8 +26,8 @@ class mysql::server {
 	}
 
 	# Collect all databases and users
-	Mysql_database<<||>>
-	Mysql_user<<||>>
-	Mysql_grant<<||>>
+#	Mysql_database<<||>>
+#	Mysql_user<<||>>
+#	Mysql_grant<<||>>
 
 }
